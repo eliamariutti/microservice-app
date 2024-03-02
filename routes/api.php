@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Actions\CreateNewJob;
+use App\Actions\GetResults;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/jobs', CreateNewJob::class);
+Route::get('/jobs/{id}', GetResults::class);
