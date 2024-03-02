@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\CustomJob;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -48,7 +49,10 @@ class CreateNewJob
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return new Response(
+                ['errors' => $validator->errors()],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
         }
 
         // Create a new job
@@ -60,9 +64,7 @@ class CreateNewJob
         self::dispatch($record->id, $request->get('tasks'))->onQueue('default');
 
         // Return the job id
-        return response()->json([
-            'job_id' => $record->id,
-        ]);
+        return new Response(['job_id' => $record->id], Response::HTTP_CREATED);
     }
 
     public function asJob(string $uuid, array $tasks)

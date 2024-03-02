@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Result;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -27,6 +28,6 @@ class GetResults
 
         $results = $this->handle($uuid);
 
-        return response()->json($results);
+        return new Response($results, 200); // Or better 201 (Created)
     }
 }
