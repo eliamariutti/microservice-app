@@ -1,9 +1,5 @@
 <?php
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-
-// uses(RefreshDatabase::class);
-
 test('POST on /api/jobs', function () {
     $response = $this->post('/api/jobs');
     $response->assertStatus(422);
