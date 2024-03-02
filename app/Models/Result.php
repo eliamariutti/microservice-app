@@ -26,4 +26,12 @@ class Result extends Model
         'custom_job_id',
         'result',
     ];
+
+    /**
+     * Get the custom jobs associated with the result.
+     */
+    public function customJob()
+    {
+        return $this->belongsTo(CustomJob::class, 'id');
+    }
 }

@@ -25,4 +25,9 @@ class CustomJob extends Model
     protected $fillable = [
         'created_at',
     ];
+
+    public function result()
+    {
+        return $this->hasMany(Result::class, 'custom_job_id');
+    }
 }
