@@ -35,7 +35,7 @@ it('test POST on /api/jobs success', function () {
     expect($response->json()['job_id'])->toBeUuid();
 });
 
-it('tests the post request on CreateNewJob create queue entity', function () {
+it('tests the post request on CreateNewJob creates queue entity', function () {
     Queue::fake();
     CreateNewJob::assertNotPushed();
 
@@ -45,4 +45,25 @@ it('tests the post request on CreateNewJob create queue entity', function () {
     ]);
     Queue::assertCount(1);
     CreateNewJob::assertPushedOn('default');
+});
+
+it('tests handle method creates five jobs', function () {
+    Queue::fake();
+    Queue::assertCount(0);
+    $uuid = '00000000-0000-0000-0000-000000000001';
+    $tasks = [
+        'call_actions',
+        'call_reason',
+        'call_segments',
+        'satisfaction',
+        'summary',
+    ];
+
+    $createJob = new CreateNewJob();
+    $createJob->handle($uuid, $tasks);
+
+    Queue::assertCount(count($tasks));
+    foreach ($tasks as $task) {
+        ($createJob::DISPATCH_ACTIONS[$task])::assertPushedOn('default');
+    }
 });

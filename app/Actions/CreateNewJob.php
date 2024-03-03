@@ -35,7 +35,7 @@ class CreateNewJob
         // Develop an action to provide a mock result for each task. (asynchronously)
         foreach ($tasks as $task) {
             $action = self::DISPATCH_ACTIONS[$task];
-            $action::dispatch($uuid);
+            $action::dispatch($uuid)->onQueue('default');
         }
     }
 
