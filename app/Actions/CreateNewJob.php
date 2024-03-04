@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Models\CustomJob;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -70,5 +71,12 @@ class CreateNewJob
     public function asJob(string $uuid, array $tasks)
     {
         return $this->handle($uuid, $tasks);
+    }
+
+    public static function routes(Router $router): void
+    {
+        $router
+            ->post('/api/jobs', static::class)
+            ->name('create-new-job');
     }
 }

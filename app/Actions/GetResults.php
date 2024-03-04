@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Result;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -23,11 +24,19 @@ class GetResults
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return new Response(
+                ['errors' => $validator->errors()],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
         }
 
         $results = $this->handle($uuid);
 
         return new Response($results, 200); // Or better 201 (Created)
+    }
+
+    public static function routes(Router $router): void
+    {
+        $router->get('/api/jobs/{uuid}', static::class)->name('get-results');
     }
 }

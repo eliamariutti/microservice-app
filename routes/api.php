@@ -1,9 +1,5 @@
 <?php
 
-use App\Actions\CreateNewJob;
-use App\Actions\GetResults;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +10,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::post('/jobs', CreateNewJob::class);
-Route::get('/jobs/{id}', GetResults::class);
