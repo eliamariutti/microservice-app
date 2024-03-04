@@ -11,17 +11,19 @@
 |
 */
 
-use Illuminate\Support\Facades\Validator;
-
 uses(
     Tests\TestCase::class,
     Illuminate\Foundation\Testing\LazilyRefreshDatabase::class
-    // Illuminate\Foundation\Testing\RefreshDatabase::class,
-)->in('Feature');
+)->group('feature')->in('Feature');
 
 uses(
-    Tests\TestCase::class
-)->in('Unit');
+    Tests\TestCase::class,
+)->group('unit')->in('Unit');
+
+uses(
+    Tests\TestCase::class,
+    Illuminate\Foundation\Testing\LazilyRefreshDatabase::class,
+)->group('stress')->in('Stress');
 
 /*
 |--------------------------------------------------------------------------
@@ -49,15 +51,3 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function createRequest($class, $requestBody){
-    $createdRequest = new $class;
-    $createdRequest
-        ->setContainer(app())
-        ->initialize($requestBody)
-        ->setValidator(
-            Validator::make($createdRequest->all(),
-            $createdRequest->rules())
-        );
-
-    return $createdRequest;
-}
