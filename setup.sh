@@ -10,7 +10,7 @@ else
 fi
 
 # Copy .env file
-cp .env-microservice .env
+cp .env_microservice .env
 
 # Build Docker Compose services
 docker compose build
