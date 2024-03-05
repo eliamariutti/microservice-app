@@ -14,3 +14,6 @@ The application is designed to handle the following requests:
 
 ## Testing
 Run "./vendor/bin/pest" to run the tests (Feature, Unit and Stress tests)
+
+## Api Specification
+The OpenAPI documentation is available at http://localhost:80/api/documentation
