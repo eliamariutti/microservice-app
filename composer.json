@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "darkaonline/l5-swagger": "^8.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/octane": "^2.3",

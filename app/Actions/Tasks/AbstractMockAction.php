@@ -9,7 +9,7 @@ abstract class AbstractMockAction
 {
     use AsAction;
 
-    public function handle(string $uuid)
+    public function handle(string $uuid): void
     {
         Result::create([
             'custom_job_id' => $uuid,
@@ -17,8 +17,8 @@ abstract class AbstractMockAction
         ]);
     }
 
-    public function asJob(string $uuid)
+    public function asJob(string $uuid): void
     {
-        return $this->handle($uuid);
+        $this->handle($uuid);
     }
 }

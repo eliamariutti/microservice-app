@@ -40,7 +40,33 @@ class CreateNewJob
         }
     }
 
-    public function asController(Request $request)
+    /**
+     * @OA\Info(
+     *     title="Example Laravel API",
+     *     version="1.0.0",
+     *     description="This is an example of a Laravel API with OpenAPI 3 documentation."
+     * )
+     * @OA\Post(
+     *     path="/api/jobs",
+     *     summary="Create a new job",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"text", "tasks"},
+     *             @OA\Property(property="text", type="string", maxLength=10),
+     *             @OA\Property(property="tasks", type="array", @OA\Items(type="string", enum={"call_reason", "call_actions", "satisfaction", "call_segments", "summary"}))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="Job created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="jobId", type="string", format="uuid")
+     *         )
+     *     )
+     * )
+     */
+    public function asController(Request $request): Response
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -68,9 +94,9 @@ class CreateNewJob
         return new Response(['job_id' => $record->id], Response::HTTP_CREATED);
     }
 
-    public function asJob(string $uuid, array $tasks)
+    public function asJob(string $uuid, array $tasks): void
     {
-        return $this->handle($uuid, $tasks);
+        $this->handle($uuid, $tasks);
     }
 
     public static function routes(Router $router): void

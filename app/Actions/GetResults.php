@@ -12,12 +12,32 @@ class GetResults
 {
     use AsAction;
 
-    public function handle(string $uuid)
+    public function handle(string $uuid): array
     {
         return Result::where('custom_job_id', $uuid)->get()->pluck('result')->toArray();
     }
-
-    public function asController(string $uuid)
+    /**
+     * @OA\Get(
+     *     path="/api/jobs/{jobId}",
+     *     summary="Get mock results for a job",
+     *     @OA\Parameter(
+     *         name="jobId",
+     *         in="path",
+     *         description="ID of the job to retrieve results for",
+     *         required=true,
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Mock results retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(type="string")
+     *         )
+     *     )
+     * )
+     */
+    public function asController(string $uuid): Response
     {
         $validator = Validator::make(['uuid' => $uuid], [
             'uuid' => 'required|uuid',

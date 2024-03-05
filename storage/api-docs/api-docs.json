@@ -1,0 +1,100 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Example Laravel API",
+        "description": "This is an example of a Laravel API with OpenAPI 3 documentation.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/jobs": {
+            "post": {
+                "summary": "Create a new job",
+                "operationId": "23ca6c0392881823b5d591d070c2db13",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "text",
+                                    "tasks"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "maxLength": 10
+                                    },
+                                    "tasks": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "call_reason",
+                                                "call_actions",
+                                                "satisfaction",
+                                                "call_segments",
+                                                "summary"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Job created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "jobId": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jobs/{jobId}": {
+            "get": {
+                "summary": "Get mock results for a job",
+                "operationId": "57666c2f3235490ec35ec7477a86634a",
+                "parameters": [
+                    {
+                        "name": "jobId",
+                        "in": "path",
+                        "description": "ID of the job to retrieve results for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mock results retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
